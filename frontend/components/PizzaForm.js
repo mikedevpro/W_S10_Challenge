@@ -39,7 +39,7 @@ export default function PizzaForm() {
   const onNewOrder = (evt) => {
     evt.preventDefault()
     const { fullName, size } = state
-    //createOrder({ fullName, size })
+    onNewOrder({ fullName, size })
     resetForm()
   }
 

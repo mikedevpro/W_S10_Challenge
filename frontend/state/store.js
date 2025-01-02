@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import ordersReducer from '.OrdersSlice'
-import { OrdersApi } from '.OrdersApi'
+import ordersReducer from './OrdersSlice'
+import { OrdersApi } from './OrdersApi'
 
 const ordersReducer =(state = { count: 0 }) => {
   return state
