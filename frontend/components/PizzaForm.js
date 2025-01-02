@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useReducer } from 'react'
+
+const CHANGE_INPUT = 'CHANGE_INPUT'
+const RESET_FORM = 'RESET_INPUT'
 
 const initialFormState = { // suggested
   fullName: '',
@@ -10,9 +13,38 @@ const initialFormState = { // suggested
   '5': false,
 }
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case CHANGE_INPUT: {
+      const { name, value } = action.payload
+      return { ...state, [name]: value } 
+    }
+    case RESET_FORM: {
+      return { fullName: '', size: '' }
+    }
+    default: {
+      return state
+    }
+  }
+}
+
 export default function PizzaForm() {
+  const [state, dispatch] = useReducer(reducer, initialFormState)
+  const onChange = ({ target: { name, value }}) => {
+    dispatch({ type: CHANGE_INPUT, payload: { name, value }})
+  }
+  const resetForm = () => {
+    dispatch({ type: RESET_FORM })
+  }
+  const onNewOrder = (evt) => {
+    evt.preventDefault()
+    const { fullName, size } = state
+    //createOrder({ fullName, size })
+    resetForm()
+  }
+
   return (
-    <form>
+    <form id="PizzaForm" onSubmit={onNewOrder}>
       <h2>Pizza Form</h2>
       {true && <div className='pending'>Order in progress...</div>}
       {true && <div className='failure'>Order failed: fullName is required</div>}
@@ -26,6 +58,7 @@ export default function PizzaForm() {
             name="fullName"
             placeholder="Type full name"
             type="text"
+            onChange={onChange}
           />
         </div>
       </div>
