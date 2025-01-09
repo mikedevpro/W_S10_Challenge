@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const slice = createSlice({
-  name: 'count_state',
-  initialState: { count: 0 },
+const ordersSlice = createSlice({
+  name: 'filter',
+  initialState: { size: 'All' },
   reducers: {
-    increment(state) {
-      state.count++
-},
+    setSize: (state, action) => {
+      state.size = action.payload
+    }
     },
 })
 
-
-export default slice.reducer
-export const { increment } = slice.actions
+export const { increment } = ordersSlice.actions;
+export const selectSize = (state) => state.filter.size;
+export default ordersSlice.reducer

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import reducer from './OrdersSlice'
-import { OrdersApi } from './OrdersApi'
+import reducer from './ordersSlice'
+import { OrdersApi } from './ordersApi'
 
 export const resetStore = () => configureStore({
   reducer: {

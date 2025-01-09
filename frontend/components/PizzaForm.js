@@ -1,4 +1,6 @@
 import React, { useReducer } from 'react'
+import {   useCreateOrderMutation
+} from '../state/ordersApi'
 
 const CHANGE_INPUT = 'CHANGE_INPUT'
 const RESET_FORM = 'RESET_INPUT'
@@ -22,32 +24,39 @@ const reducer = (state, action) => {
     case RESET_FORM: {
       return { fullName: '', size: '' }
     }
-    default: {
+    default: 
       return state
-    }
-  }
+   }
 }
 
 export default function PizzaForm() {
-  const [state, dispatch] = useReducer(reducer, initialFormState)
-  const onChange = ({ target: { name, value }}) => {
-    dispatch({ type: CHANGE_INPUT, payload: { name, value }})
+  const [form, dispatch] = useReducer(reducer, initialFormState)
+  const [createOrder, {isLoading, error}] =  useCreateOrderMutation()
+  const onChange = (event) => {
+    let {name, value, type, checked} = event.target
+    const checkedValue = type === 'checkbox' ? checked : value
+    dispatch({ type: CHANGE_INPUT, payload: { name, value: checkedValue }})
   }
-  const resetForm = () => {
-    dispatch({ type: RESET_FORM })
-  }
+  
   const onNewOrder = (evt) => {
     evt.preventDefault()
-    const { fullName, size } = state
-    onNewOrder({ fullName, size })
-    resetForm()
+    let { fullName, size, ...toppings } = form
+    let toppingList = []
+    for (let key in toppings) {
+      if (toppings[key]) toppingList.push(key) 
+    }
+  let requestBody = { fullName, size, toppingList } 
+  createOrder(requestBody)
+  .unwrap()
+  .then(() => {dispatch({type: RESET_FORM})})
+  .catch(() => {})
   }
 
   return (
     <form id="PizzaForm" onSubmit={onNewOrder}>
       <h2>Pizza Form</h2>
-      {true && <div className='pending'>Order in progress...</div>}
-      {true && <div className='failure'>Order failed: fullName is required</div>}
+      {isLoading && <div className='pending'>Order in progress...</div>}
+      {error && <div className='failure'>Order failed: {error.data.message}</div>}
 
       <div className="input-group">
         <div>
@@ -59,6 +68,7 @@ export default function PizzaForm() {
             placeholder="Type full name"
             type="text"
             onChange={onChange}
+            value={form.fullName}
           />
         </div>
       </div>
@@ -66,7 +76,8 @@ export default function PizzaForm() {
       <div className="input-group">
         <div>
           <label htmlFor="size">Size</label><br />
-          <select data-testid="sizeSelect" id="size" name="size">
+          <select data-testid="sizeSelect" id="size" name="size"
+          onChange={onChange} value={form.size}>
             <option value="">----Choose size----</option>
             <option value="S">Small</option>
             <option value="M">Medium</option>
@@ -77,19 +88,19 @@ export default function PizzaForm() {
 
       <div className="input-group">
         <label>
-          <input data-testid="checkPepperoni" name="1" type="checkbox" />
+          <input data-testid="checkPepperoni" name="1" type="checkbox" onChange={onChange} checked={form['1']}/>
           Pepperoni<br /></label>
         <label>
-          <input data-testid="checkGreenpeppers" name="2" type="checkbox" />
+          <input data-testid="checkGreenpeppers" name="2" type="checkbox" onChange={onChange} checked={form['2']}/>
           Green Peppers<br /></label>
         <label>
-          <input data-testid="checkPineapple" name="3" type="checkbox" />
+          <input data-testid="checkPineapple" name="3" type="checkbox" onChange={onChange} checked={form['3']}/>
           Pineapple<br /></label>
         <label>
-          <input data-testid="checkMushrooms" name="4" type="checkbox" />
+          <input data-testid="checkMushrooms" name="4" type="checkbox" onChange={onChange} checked={form['4']}/>
           Mushrooms<br /></label>
         <label>
-          <input data-testid="checkHam" name="5" type="checkbox" />
+          <input data-testid="checkHam" name="5" type="checkbox" onChange={onChange} checked={form['5']}/>
           Ham<br /></label>
       </div>
       <input data-testid="submit" type="submit" />
