@@ -2,18 +2,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const OrdersApi = createApi({
     reducerPath: 'ordersApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:9009/api/pizza' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:9009/api/pizza/' }),
     tagTypes: ['Orders'],
     endpoints: build => ({
         getOrders: build.query({
-          query: () => 'orders',
+          query: () => 'history',
           providesTags: ['Orders'],
         }),
         createOrder: build.mutation({
-           query: order => ({
-             url: '/order',
+           query: (order) => ({
+             url: 'order',
+             body: { order },
              method: 'POST',
-             body: order ,
            }),
            invalidatesTags: ['Orders'],
         }),

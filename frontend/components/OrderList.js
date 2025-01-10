@@ -1,22 +1,26 @@
 import React from 'react'
-import { useGetOrdersQuery } from '../state/ordersApi'
+import { useGetOrdersQuery, useCreateOrderMutation } from '../state/ordersApi'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectSize, setSize } from '../state/ordersSlice'
+import { selectSize } from '../state/ordersSlice'
 
 export default function OrderList() {
-  const dispatch = useDispatch()
-  const selected = useSelector(selectSize)
-  const {data: orders} = useGetOrdersQuery()
+  // const dispatch = useDispatch()
+  const selected = useSelector(st => st.selectSize)
+
+  const { data: orders } = useGetOrdersQuery()
+  const [createOrder] = useCreateOrderMutation()
+  
   return (
     <div id="orderList">
       <h2>Pizza Orders</h2>
       <ol>
         {
-          orders.map(() => {
+          orders?.map((order) => {
+            {/* console.log(order) */}
             return (
               <li key={1}>
                 <div>
-                  order details here
+                  {`${order.customer} ordered a size ${selectSize} with `}
                 </div>
               </li>
             )
@@ -31,7 +35,9 @@ export default function OrderList() {
             return <button
               data-testid={`filterBtn${size}`}
               className={className}
-              key={size}>{size}</button>
+              key={size}>{size}
+              
+              </button>
           })
         }
       </div>
