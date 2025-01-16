@@ -1,14 +1,15 @@
 import React from 'react'
-import { useGetOrdersQuery, useCreateOrderMutation } from '../state/ordersApi'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectSize } from '../state/ordersSlice'
+import { useGetOrdersQuery } from '../state/ordersApi'
+import { useSelector } from 'react-redux'
+
+
 
 export default function OrderList() {
   // const dispatch = useDispatch()
   const selected = useSelector(st => st.selectSize)
 
   const { data: orders } = useGetOrdersQuery()
-  const [createOrder] = useCreateOrderMutation()
+  // const [createOrder] = useCreateOrderMutation()
   
   return (
     <div id="orderList">
@@ -20,7 +21,7 @@ export default function OrderList() {
             return (
               <li key={1}>
                 <div>
-                  {`${order.customer} ordered a size ${selectSize} with `}
+                  {`${order.customer} ordered a size with toppings`}
                 </div>
               </li>
             )
@@ -31,7 +32,7 @@ export default function OrderList() {
         Filter by size:
         {
           ['All', 'S', 'M', 'L'].map(size => {
-            const className = `button-filter${size === selected ? 'active' : ''}`
+            const className = `button-filter${size === selected ? 'active' : 'All'}`
             return <button
               data-testid={`filterBtn${size}`}
               className={className}

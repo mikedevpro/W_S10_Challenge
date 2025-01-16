@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import reducer from './ordersSlice'
 import { OrdersApi } from './ordersApi'
 
 export const resetStore = () => configureStore({
   reducer: {
-    ordersState: reducer,
     // add your reducer(s) here
     [OrdersApi.reducerPath]: OrdersApi.reducer
   },
