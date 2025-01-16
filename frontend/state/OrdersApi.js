@@ -12,7 +12,7 @@ export const OrdersApi = createApi({
         createOrder: build.mutation({
            query: (order) => ({
              url: 'order',
-             body: { order },
+             body: order ,
              method: 'POST',
            }),
            invalidatesTags: ['Orders'],

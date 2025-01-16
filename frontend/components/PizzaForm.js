@@ -2,12 +2,13 @@ import React, { useReducer } from 'react'
 import {   useCreateOrderMutation
 } from '../state/ordersApi'
 
+
 const CHANGE_INPUT = 'CHANGE_INPUT'
 const RESET_FORM = 'RESET_INPUT'
 
 const initialFormState = { // suggested
   fullName: '',
-  size: '',
+  size: ['S', 'M', 'L'],
   '1': false,
   '2': false,
   '3': false,
@@ -45,7 +46,7 @@ export default function PizzaForm() {
     for (let key in toppings) {
       if (toppings[key]) toppingList.push(key) 
     }
-  let requestBody = { fullName, size, toppingList } 
+  let requestBody = { fullName, size, toppings:toppingList } 
   createOrder(requestBody)
   .unwrap()
   .then(() => {dispatch({type: RESET_FORM})})
