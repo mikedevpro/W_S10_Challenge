@@ -2,9 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { OrdersApi } from './ordersApi.js';
 import ordersReducer from './ordersSlice.js';
 
-// const exampleReducer = (state = {count: 0}) => {
-//   return state
-// }
+
 
 export const resetStore = () => configureStore({
   reducer: {
