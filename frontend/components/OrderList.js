@@ -1,7 +1,7 @@
 import React from 'react';
-import { useGetOrdersQuery } from '../state/ordersApi.js';
+import { useGetOrdersQuery } from '../state/OrdersApi.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterChange } from '../state/ordersSlice.js';
+import { filterChange } from '../state/OrdersSlice.js';
 
 export default function OrderList() {
   const dispatch = useDispatch();

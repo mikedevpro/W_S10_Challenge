@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ordersApi } from './ordersApi.js';
-import ordersReducer from './ordersSlice.js';
+import { OrdersApi } from './OrdersApi.js';
+import ordersReducer from './OrdersSlice.js';
 
 
 
@@ -9,11 +9,11 @@ export const resetStore = () => configureStore({
     // example: exampleReducer,
     // add your reducer(s) here
     orders: ordersReducer,
-    [ordersApi.reducerPath]: ordersApi.reducer,
+    [OrdersApi.reducerPath]: OrdersApi.reducer,
   },
   middleware: (getDefault) => getDefault().concat(
     // if using RTK Query for your networking: add your middleware here
-    ordersApi.middleware
+    OrdersApi.middleware
     // if using Redux Thunk for your networking: you can ignore this
   ),
 })

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const ordersSlice = createSlice({
+const OrdersSlice = createSlice({
   name: 'orders',
   initialState: { 
     size: 'All'
@@ -12,7 +12,7 @@ const ordersSlice = createSlice({
   },
 });
 
-export const { filterChange } = ordersSlice.actions;
+export const { filterChange } = OrdersSlice.actions;
 
-export default ordersSlice.reducer;
+export default OrdersSlice.reducer;
 
