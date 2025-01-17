@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { OrdersApi } from './ordersApi';
+import { OrdersApi } from './ordersApi.js';
 import ordersReducer from './ordersSlice.js';
 
 
