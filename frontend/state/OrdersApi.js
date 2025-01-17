@@ -23,4 +23,4 @@ export const OrdersApi = createApi({
 export const {
   useGetOrdersQuery,
   useCreateOrderMutation,
-} = OrdersApi
+} = OrdersApi;
