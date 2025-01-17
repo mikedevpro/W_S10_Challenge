@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const OrdersApi = createApi({
+export const ordersApi = createApi({
     reducerPath: 'ordersApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:9009/api/pizza/' }),
     tagTypes: ['Orders'],
@@ -23,4 +23,4 @@ export const OrdersApi = createApi({
 export const {
   useGetOrdersQuery,
   useCreateOrderMutation,
-} = OrdersApi;
+} = ordersApi;
